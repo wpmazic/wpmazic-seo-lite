@@ -1,0 +1,95 @@
+=== WPMazic SEO Lite ===
+Contributors: wpmazicteam
+Tags: seo, sitemap, schema, redirects, open graph
+Requires at least: 5.8
+Tested up to: 6.8
+Stable tag: 1.0.0
+Requires PHP: 7.4
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Core SEO toolkit for WordPress with migration wizard, metadata tools, sitemap, schema basics, redirects, and crawl helpers.
+
+== Description ==
+
+WPMazic SEO Lite helps you launch SEO fundamentals quickly.
+
+**Included Free Features**
+
+* Setup wizard + 1-click migration from Yoast, Rank Math, and AIOSEO
+* SEO title/meta controls with snippet preview for posts, pages, and custom post types
+* Focus keyword analysis and per-post SEO controls
+* XML sitemap plus image sitemap support
+* Schema output for common content types including Article, FAQ, Product, and LocalBusiness
+* Open Graph, Twitter Cards, dynamic OG image fallback, and author SEO enhancements
+* Redirect manager, 404 monitor, and auto slug redirect
+* Search engine verification tags, robots.txt editor, llms.txt editor, IndexNow, and optional search engine ping
+* Bulk editor, migration wizard, local SEO, breadcrumbs, image SEO, and internal link tools
+
+== External services ==
+
+This plugin can optionally connect to third-party services only when the corresponding feature is enabled or configured by the site owner.
+
+* Google Analytics 4 frontend tracking: when a GA4 Measurement ID is saved, the plugin loads `gtag.js` from `www.googletagmanager.com` on the frontend and sends pageview analytics events to Google when visitors load the site.
+  Terms: https://developers.google.com/terms/
+  Privacy: https://policies.google.com/privacy
+* IndexNow: when IndexNow is enabled or a manual batch submission is triggered, the plugin sends your submitted URL, site host, API key, and key location URL to `api.indexnow.org`.
+  Protocol: https://www.indexnow.org/documentation
+  Privacy: https://www.microsoft.com/en-us/privacy/privacystatement
+* Search engine ping endpoints: when Auto Ping Search Engines is enabled, the plugin sends your sitemap URL to Google and Bing ping endpoints after publish or update events.
+  Google Privacy: https://policies.google.com/privacy
+  Microsoft Privacy: https://www.microsoft.com/en-us/privacy/privacystatement
+
+== Privacy ==
+
+WPMazic SEO Lite stores plugin settings in your WordPress database. It does not collect personal data by default.
+
+If you enable features that connect to external services (see the "External services" section), your site may send data to those services as described there.
+
+== Installation ==
+
+1. Upload `wpmazic-seo-lite` to `/wp-content/plugins/`
+2. Activate from the Plugins screen in WordPress
+3. Open WPMazic SEO in admin and complete setup
+
+== Frequently Asked Questions ==
+
+= Does Lite include migration from Yoast/Rank Math/AIOSEO? =
+
+Yes. Use the setup wizard.
+
+= Where is the sitemap? =
+
+Visit `https://yourdomain.com/sitemap.xml`.
+
+= Does this package include all bundled features? =
+
+Yes. The plugin includes the features bundled in this package. If you use a separate commercial WPMazic product, treat it as a separate offering outside the WordPress.org plugin directory package.
+
+= Does the plugin load remote assets in wp-admin? =
+
+No. Admin CSS and JS are bundled locally inside the plugin package.
+
+== Screenshots ==
+
+1. Dashboard overview
+2. Settings screen
+3. Tools (robots.txt + llms.txt editor)
+4. Redirect manager
+5. SEO meta box editor
+
+== Support ==
+
+For documentation and support, visit:
+https://wpmazic.com/
+
+== Changelog ==
+
+= 1.0.0 =
+* Initial Lite release
+* Free-feature package with setup wizard, migration, and core SEO toolkit
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+Initial release.

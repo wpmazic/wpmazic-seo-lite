@@ -1,0 +1,85 @@
+# WPMazic SEO Lite POT File
+msgid ""
+msgstr ""
+"Project-Id-Version: WPMazic SEO Lite 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wpmazic.com\n"
+"POT-Creation-Date: 2026-03-19 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: wpmazic-seo-lite.php:1044
+msgid "Learn More"
+msgstr ""
+
+#: templates/admin/bulk-editor.php:8
+#: templates/admin/404-monitor.php:13
+#: templates/admin/404-monitor.php:25
+#: templates/admin/redirects.php:15
+#: templates/admin/redirects.php:56
+#: templates/admin/tools.php:149
+#: templates/admin/tools.php:173
+#: templates/admin/tools.php:197
+#: templates/admin/tools.php:224
+msgid "Permission denied."
+msgstr ""
+
+#: templates/admin/tools.php:166
+msgid "robots.txt saved and written to the site root."
+msgstr ""
+
+#: templates/admin/tools.php:190
+msgid "llms.txt saved and written to the site root."
+msgstr ""
+
+#: templates/admin/tools.php:161
+#, php-format
+msgid "robots.txt content saved, but the file could not be written. %s"
+msgstr ""
+
+#: templates/admin/tools.php:185
+#, php-format
+msgid "llms.txt content saved, but the file could not be written. %s"
+msgstr ""
+
+#: templates/admin/tools.php:224
+msgid "Database optimized."
+msgstr ""
+
+#: templates/admin/tools.php:232
+msgid "Plugin cache cleared."
+msgstr ""
+
+#: templates/admin/redirects.php:25
+#, php-format
+msgid "Redirect capacity reached (%d rules). Delete an existing rule before adding another one."
+msgstr ""
+
+#: templates/admin/redirects.php:35
+msgid "A redirect for this source URL already exists."
+msgstr ""
+
+#: templates/admin/redirects.php:48
+msgid "Redirect added."
+msgstr ""
+
+#: templates/admin/redirects.php:61
+msgid "Redirect deleted."
+msgstr ""
+
+#: templates/admin/404-monitor.php:18
+msgid "404 entry deleted."
+msgstr ""
+
+#: templates/admin/404-monitor.php:28
+msgid "404 log cleared."
+msgstr ""
+
+#: templates/admin/bulk-editor.php:29
+#, php-format
+msgid "%d posts updated."
+msgstr ""
