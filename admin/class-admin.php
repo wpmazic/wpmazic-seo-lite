@@ -179,6 +179,7 @@ class WPMazic_Admin
             'enable_auto_slug_redirect',
             'enable_dynamic_og_image',
             'enable_auto_search_ping',
+            'enable_ga4_tracking',
             'enable_security_bad_bots',
             'enable_security_headers',
             'enable_security_disable_xmlrpc',

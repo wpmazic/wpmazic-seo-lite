@@ -62,9 +62,10 @@ class WPMazic_Verification
         }
 
         $settings = wpmazic_seo_get_settings();
+        $enabled  = ! empty( $settings['enable_ga4_tracking'] );
         $raw_id = isset($settings['ga4_measurement_id']) ? strtoupper(trim((string) $settings['ga4_measurement_id'])) : '';
 
-        if ('' === $raw_id) {
+        if ( ! $enabled || '' === $raw_id ) {
             return;
         }
 
@@ -92,4 +93,3 @@ class WPMazic_Verification
         wp_add_inline_script('wpmazic-ga4-gtag', $inline_script);
     }
 }
-

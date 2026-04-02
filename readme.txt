@@ -30,7 +30,7 @@ WPMazic SEO Lite helps you launch SEO fundamentals quickly.
 
 This plugin can optionally connect to third-party services only when the corresponding feature is enabled or configured by the site owner.
 
-* Google Analytics 4 frontend tracking: when a GA4 Measurement ID is saved, the plugin loads `gtag.js` from `www.googletagmanager.com` on the frontend and sends pageview analytics events to Google when visitors load the site.
+* Google Analytics 4 frontend tracking: when frontend tracking is enabled and a GA4 Measurement ID is saved, the plugin loads `gtag.js` from `www.googletagmanager.com` on the frontend and sends pageview analytics events to Google when visitors load the site. GA4 Measurement IDs are public identifiers and appear in page source as part of the tracking tag.
   Terms: https://developers.google.com/terms/
   Privacy: https://policies.google.com/privacy
 * IndexNow: when IndexNow is enabled or a manual batch submission is triggered, the plugin sends your submitted URL, site host, API key, and key location URL to `api.indexnow.org`.

@@ -57,21 +57,30 @@ wpmazic_seo_admin_shell_open(
             <div class="wmz-field">
                 <label for="twitter_site"><?php esc_html_e( 'Twitter/X Handle', 'wpmazic-seo-lite' ); ?></label>
                 <input class="wmz-input" type="text" id="twitter_site" name="wpmazic_settings[twitter_site]" value="<?php echo esc_attr( isset( $settings['twitter_site'] ) ? $settings['twitter_site'] : '' ); ?>" placeholder="@yourbrand">
+                <p class="wmz-help"><?php esc_html_e( 'Used in public Twitter/X meta tags on the frontend when Open Graph & Twitter Cards are enabled.', 'wpmazic-seo-lite' ); ?></p>
             </div>
             <div class="wmz-field">
                 <label for="indexnow_api_key"><?php esc_html_e( 'IndexNow API Key', 'wpmazic-seo-lite' ); ?></label>
                 <input class="wmz-input" type="text" id="indexnow_api_key" name="wpmazic_settings[indexnow_api_key]" value="<?php echo esc_attr( isset( $settings['indexnow_api_key'] ) ? $settings['indexnow_api_key'] : '' ); ?>">
-                <p class="wmz-help"><?php esc_html_e( 'Public key URL: /indexnow-key/{key}.txt', 'wpmazic-seo-lite' ); ?></p>
+                <p class="wmz-help"><?php esc_html_e( 'Public key URL: /indexnow-key/{key}.txt. This key is intentionally public for IndexNow validation.', 'wpmazic-seo-lite' ); ?></p>
             </div>
             <div class="wmz-field">
                 <label for="generator_meta_text"><?php esc_html_e( 'Branding Meta Text', 'wpmazic-seo-lite' ); ?></label>
                 <input class="wmz-input" type="text" id="generator_meta_text" name="wpmazic_settings[generator_meta_text]" value="<?php echo esc_attr( isset( $settings['generator_meta_text'] ) ? $settings['generator_meta_text'] : 'WPMazic SEO' ); ?>">
-                <p class="wmz-help"><?php esc_html_e( 'Used in <meta name="generator"> when Plugin Branding Meta Tag is enabled.', 'wpmazic-seo-lite' ); ?></p>
+                <p class="wmz-help"><?php esc_html_e( 'Used in the public <meta name="generator"> tag when Plugin Branding Meta Tag is enabled.', 'wpmazic-seo-lite' ); ?></p>
             </div>
             <div class="wmz-field">
                 <label for="ga4_measurement_id"><?php esc_html_e( 'GA4 Measurement ID', 'wpmazic-seo-lite' ); ?></label>
                 <input class="wmz-input" type="text" id="ga4_measurement_id" name="wpmazic_settings[ga4_measurement_id]" value="<?php echo esc_attr( isset( $settings['ga4_measurement_id'] ) ? $settings['ga4_measurement_id'] : '' ); ?>" placeholder="G-XXXXXXXXXX">
-                <p class="wmz-help"><?php esc_html_e( 'Adds the GA4 tracking tag on the frontend when configured.', 'wpmazic-seo-lite' ); ?></p>
+                <p class="wmz-help"><?php esc_html_e( 'GA4 measurement IDs are public identifiers. When tracking is enabled, this value appears in frontend source as part of the Google tag.', 'wpmazic-seo-lite' ); ?></p>
+            </div>
+            <div class="wmz-field">
+                <label for="enable_ga4_tracking"><?php esc_html_e( 'Enable GA4 Frontend Tracking', 'wpmazic-seo-lite' ); ?></label>
+                <label class="wmz-inline-checks">
+                    <input type="checkbox" id="enable_ga4_tracking" name="wpmazic_settings[enable_ga4_tracking]" value="1" <?php checked( ! empty( $settings['enable_ga4_tracking'] ) ); ?>>
+                    <?php esc_html_e( 'Load the Google tag on the public frontend', 'wpmazic-seo-lite' ); ?>
+                </label>
+                <p class="wmz-help"><?php esc_html_e( 'Leave this disabled if you do not want GA4 code added to page source.', 'wpmazic-seo-lite' ); ?></p>
             </div>
         </div>
     </div>
@@ -156,7 +165,7 @@ wpmazic_seo_admin_shell_open(
 
     <div class="wmz-card">
         <h2><?php esc_html_e( 'Search Engine Verification', 'wpmazic-seo-lite' ); ?></h2>
-        <p class="wmz-subtle"><?php esc_html_e( 'Paste verification content values from webmaster tools. The plugin outputs verification meta tags in <head>.', 'wpmazic-seo-lite' ); ?></p>
+        <p class="wmz-subtle"><?php esc_html_e( 'Paste verification content values from webmaster tools. These values are intentionally output as public meta tags in <head>.', 'wpmazic-seo-lite' ); ?></p>
         <div class="wmz-form-grid">
             <div class="wmz-field">
                 <label for="google_site_verification"><?php esc_html_e( 'Google Verification Content', 'wpmazic-seo-lite' ); ?></label>

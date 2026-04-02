@@ -296,6 +296,7 @@ function wpmazic_seo_get_default_settings() {
         'yandex_site_verification' => '',
         'baidu_site_verification' => '',
         'ga4_measurement_id' => '',
+        'enable_ga4_tracking' => 0,
         'enable_dynamic_og_image' => 1,
         'enable_auto_search_ping' => 0,
         'generator_meta_text' => 'WPMazic SEO',
