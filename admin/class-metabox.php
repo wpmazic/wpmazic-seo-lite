@@ -44,7 +44,6 @@ class WPMazic_Metabox
         'noimageindex',
         'canonical',
         'redirect',
-        'hreflang_map',
         'breadcrumb_title',
         'cornerstone',
         'schema_type',
@@ -536,15 +535,6 @@ class WPMazic_Metabox
                         placeholder="<?php echo esc_url(get_permalink($post->ID)); ?>" />
                     <span
                         class="description"><?php esc_html_e('Override the default canonical URL. Leave blank to use the post permalink.', 'wpmazic-seo-lite'); ?></span>
-                </div>
-
-                <!-- Hreflang Map -->
-                <div class="wpmazic-field">
-                    <label for="wpmazic_hreflang_map"><?php esc_html_e('Hreflang Alternates', 'wpmazic-seo-lite'); ?></label>
-                    <textarea id="wpmazic_hreflang_map" name="wpmazic_hreflang_map" rows="4"
-                        placeholder="en-US|https://example.com/en/page&#10;fr-FR|https://example.com/fr/page&#10;x-default|https://example.com/page"><?php echo esc_textarea($meta['hreflang_map']); ?></textarea>
-                    <span
-                        class="description"><?php esc_html_e('One per line. Format: locale|url (or locale=url). Example: en-US|https://example.com/en/page', 'wpmazic-seo-lite'); ?></span>
                 </div>
 
                 <!-- Redirect URL -->
@@ -1376,7 +1366,6 @@ class WPMazic_Metabox
             'wpmazic_description' => 'description',
             'wpmazic_og_description' => 'og_description',
             'wpmazic_twitter_description' => 'twitter_description',
-            'wpmazic_hreflang_map' => 'hreflang_map',
         );
 
         foreach ($textarea_fields as $post_key => $meta_key) {
@@ -1423,14 +1412,20 @@ class WPMazic_Metabox
 
         // --- FAQ schema items ---
         if (isset($_POST['wpmazic_faq_question'], $_POST['wpmazic_faq_answer']) && is_array($_POST['wpmazic_faq_question']) && is_array($_POST['wpmazic_faq_answer'])) {
-            $questions = array_values(wp_unslash($_POST['wpmazic_faq_question']));
-            $answers = array_values(wp_unslash($_POST['wpmazic_faq_answer']));
+            $questions = array_map(
+                'sanitize_text_field',
+                array_values( wp_unslash( $_POST['wpmazic_faq_question'] ) )
+            );
+            $answers = array_map(
+                'sanitize_textarea_field',
+                array_values( wp_unslash( $_POST['wpmazic_faq_answer'] ) )
+            );
             $faq_items = array();
             $count = max(count($questions), count($answers));
 
             for ($i = 0; $i < $count; $i++) {
-                $question = isset($questions[$i]) ? sanitize_text_field($questions[$i]) : '';
-                $answer = isset($answers[$i]) ? sanitize_textarea_field($answers[$i]) : '';
+                $question = isset($questions[$i]) ? $questions[$i] : '';
+                $answer = isset($answers[$i]) ? $answers[$i] : '';
 
                 if ('' === trim((string) $question) || '' === trim((string) $answer)) {
                     continue;

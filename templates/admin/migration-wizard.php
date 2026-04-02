@@ -34,7 +34,7 @@ $request_flag = static function ( $key, $default = false ) {
         return (bool) $default;
     }
 
-    return ! empty( wp_unslash( $_REQUEST[ $key ] ) );
+    return '' !== sanitize_text_field( wp_unslash( $_REQUEST[ $key ] ) );
 };
 
 $step            = isset( $_REQUEST['step'] ) ? absint( wp_unslash( $_REQUEST['step'] ) ) : 1;
@@ -66,11 +66,11 @@ if ( isset( $_POST['wpmazic_run_migration'] ) && check_admin_referer( 'wpmazic_r
 
     $run_args = array(
         'source'                  => $run_source,
-        'overwrite'               => isset( $_POST['overwrite'] ) && ! empty( wp_unslash( $_POST['overwrite'] ) ),
-        'include_social'          => isset( $_POST['include_social'] ) && ! empty( wp_unslash( $_POST['include_social'] ) ),
-        'include_robots'          => isset( $_POST['include_robots'] ) && ! empty( wp_unslash( $_POST['include_robots'] ) ),
-        'include_advanced_robots' => isset( $_POST['include_advanced_robots'] ) && ! empty( wp_unslash( $_POST['include_advanced_robots'] ) ),
-        'include_image_seo'       => isset( $_POST['include_image_seo'] ) && ! empty( wp_unslash( $_POST['include_image_seo'] ) ),
+        'overwrite'               => ! empty( $_POST['overwrite'] ),
+        'include_social'          => ! empty( $_POST['include_social'] ),
+        'include_robots'          => ! empty( $_POST['include_robots'] ),
+        'include_advanced_robots' => ! empty( $_POST['include_advanced_robots'] ),
+        'include_image_seo'       => ! empty( $_POST['include_image_seo'] ),
     );
 
     if ( class_exists( 'WPMazic_Migration' ) ) {

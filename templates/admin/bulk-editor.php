@@ -8,7 +8,7 @@ if ( isset( $_POST['wpmazic_bulk_save'] ) && check_admin_referer( 'wpmazic_bulk_
         wpmazic_seo_lite_add_notice( 'error', __( 'Permission denied.', 'wpmazic-seo-lite' ) );
     } else {
     // SECURITY: Validate and sanitize input
-    $items_raw = isset( $_POST['items'] ) ? wp_unslash( $_POST['items'] ) : array();
+    $items_raw = isset( $_POST['items'] ) && is_array( $_POST['items'] ) ? $_POST['items'] : array();
     $items = array();
     
     if ( is_array( $items_raw ) ) {
@@ -16,7 +16,11 @@ if ( isset( $_POST['wpmazic_bulk_save'] ) && check_admin_referer( 'wpmazic_bulk_
         foreach ( $items_raw as $post_id => $item ) {
             $post_id = absint( $post_id );
             if ( $post_id && is_array( $item ) ) {
-                $items[ $post_id ] = array_map( 'wp_unslash', $item );
+                $items[ $post_id ] = array(
+                    'title'       => isset( $item['title'] ) ? sanitize_text_field( wp_unslash( $item['title'] ) ) : '',
+                    'description' => isset( $item['description'] ) ? sanitize_textarea_field( wp_unslash( $item['description'] ) ) : '',
+                    'keyword'     => isset( $item['keyword'] ) ? sanitize_text_field( wp_unslash( $item['keyword'] ) ) : '',
+                );
             }
         }
     }
@@ -29,9 +33,9 @@ if ( isset( $_POST['wpmazic_bulk_save'] ) && check_admin_referer( 'wpmazic_bulk_
             continue;
         }
 
-        $title       = isset( $item['title'] ) ? sanitize_text_field( $item['title'] ) : '';
-        $description = isset( $item['description'] ) ? sanitize_textarea_field( $item['description'] ) : '';
-        $keyword     = isset( $item['keyword'] ) ? sanitize_text_field( $item['keyword'] ) : '';
+        $title       = isset( $item['title'] ) ? (string) $item['title'] : '';
+        $description = isset( $item['description'] ) ? (string) $item['description'] : '';
+        $keyword     = isset( $item['keyword'] ) ? (string) $item['keyword'] : '';
 
         update_post_meta( $post_id, '_wpmazic_title', $title );
         update_post_meta( $post_id, '_wpmazic_description', $description );

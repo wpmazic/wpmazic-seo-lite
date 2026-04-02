@@ -208,7 +208,10 @@ if ( ! defined( 'WPMAZIC_SEO_BASENAME' ) ) {
  * @return array
  */
 function wpmazic_seo_get_settings() {
-    return get_option( 'wpmazic_settings', array() );
+    $stored = get_option( 'wpmazic_settings', array() );
+    $stored = is_array( $stored ) ? $stored : array();
+
+    return array_merge( wpmazic_seo_get_default_settings(), $stored );
 }
 
 /**
@@ -336,7 +339,8 @@ function wpmazic_seo_activate( $show_wizard = true ) {
 
     $charset  = $wpdb->get_charset_collate();
     $defaults = wpmazic_seo_get_default_settings();
-    $existing = wpmazic_seo_get_settings();
+    $existing = get_option( 'wpmazic_settings', array() );
+    $existing = is_array( $existing ) ? $existing : array();
 
     if ( empty( $existing ) ) {
         add_option( 'wpmazic_settings', $defaults );
