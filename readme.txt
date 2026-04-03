@@ -2,7 +2,7 @@
 Contributors: wpmazicteam
 Tags: seo, sitemap, schema, redirects, open graph
 Requires at least: 5.8
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
