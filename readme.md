@@ -77,6 +77,24 @@ WPMazic SEO Lite is suitable for:
 
 ---
 
+## 📸 WPMazic Pro & Lite Screenshots
+
+![Dashboard](assets/screenshots/dashboard.png)  
+![SEO Tools](assets/screenshots/seo-settings.png)  
+![SEO Analysis](assets/screenshots/redirect.png)  
+![SEO Health](assets/screenshots/404-monitor.png)
+
+---
+
+
+## 🎥 Live Demo (Pro Version)
+
+[![Watch Demo](https://img.youtube.com/vi/KoTHiBDS1_Y/0.jpg)](https://youtu.be/KoTHiBDS1_Y)
+
+👉 Click above to watch WPMazic SEO Pro in action.
+
+---
+
 ## 🛠️ Installation
 
 ### From WordPress Dashboard
@@ -87,15 +105,5 @@ WPMazic SEO Lite is suitable for:
 
 ### Manual Installation
 
-
 ```bash
 git clone https://github.com/wpmazic/wpmazic-seo-lite.git
-
-
-
-## 🎥 Live Demo (Pro Version)
-
-https://youtu.be/KoTHiBDS1_Y
-
-👉 Click above to watch WPMazic SEO Pro in action.
-
