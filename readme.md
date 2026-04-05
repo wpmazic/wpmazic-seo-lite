@@ -87,11 +87,15 @@ WPMazic SEO Lite is suitable for:
 
 ### Manual Installation
 
+
+```bash
+git clone https://github.com/wpmazic/wpmazic-seo-lite.git
+
+
+
 ## 🎥 Live Demo (Pro Version)
 
 https://youtu.be/KoTHiBDS1_Y
 
 👉 Click above to watch WPMazic SEO Pro in action.
 
-```bash
-git clone https://github.com/wpmazic/wpmazic-seo-lite.git
