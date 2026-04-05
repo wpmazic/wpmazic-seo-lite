@@ -79,10 +79,10 @@ WPMazic SEO Lite is suitable for:
 
 ## 📸 WPMazic Pro & Lite Screenshots
 
-![Dashboard](assets/screenshots/dashboard.png)  
-![SEO Tools](assets/screenshots/seo-settings.png)  
-![SEO Analysis](assets/screenshots/redirect.png)  
-![SEO Health](assets/screenshots/404-monitor.png)
+![Dashboard](screenshots/dashboard.png)  
+![SEO Tools](screenshots/seo-settings.png)  
+![SEO Analysis](screenshots/redirect.png)  
+![SEO Health](screenshots/404-monitor.png)
 
 ---
 
