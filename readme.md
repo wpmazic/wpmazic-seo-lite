@@ -87,5 +87,11 @@ WPMazic SEO Lite is suitable for:
 
 ### Manual Installation
 
+## 🎥 Live Demo (Pro Version)
+
+[![Watch Demo](https://wpmazic.com/screens/WPMazic-SEO Dashboard.png)](https://youtu.be/KoTHiBDS1_Y)
+
+👉 Click above to watch WPMazic SEO Pro in action.
+
 ```bash
 git clone https://github.com/wpmazic/wpmazic-seo-lite.git
