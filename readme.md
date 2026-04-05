@@ -89,7 +89,7 @@ WPMazic SEO Lite is suitable for:
 
 ## 🎥 Live Demo (Pro Version)
 
-[![Watch Demo](https://wpmazic.com/screens/WPMazic-SEO Dashboard.png)](https://youtu.be/KoTHiBDS1_Y)
+https://youtu.be/KoTHiBDS1_Y
 
 👉 Click above to watch WPMazic SEO Pro in action.
 
