@@ -82,7 +82,7 @@ WPMazic SEO Lite is suitable for:
 ![Dashboard](screenshots/dashboard.png)  
 ![SEO Tools](screenshots/seo-settings.png)  
 ![SEO Analysis](screenshots/redirect.png)  
-![SEO Health](screenshots/404-monitor.png)
+![SEO Health](screenshots/monitor.png)
 
 ---
 
