@@ -12,7 +12,7 @@ class WPMazic_IndexNow {
 
     public function __construct() {
         $settings  = wpmazic_seo_get_settings();
-        $this->key = ! empty( $settings['indexnow_api_key'] ) ? preg_replace( '/[^a-zA-Z0-9]/', '', (string) $settings['indexnow_api_key'] ) : '';
+        $this->key = ! empty( $settings['indexnow_api_key'] ) ? preg_replace( '/[^a-zA-Z0-9-]/', '', (string) $settings['indexnow_api_key'] ) : '';
 
         add_action( 'init', array( $this, 'register_rewrite' ) );
         add_action( 'template_redirect', array( $this, 'serve_key_file' ) );
@@ -23,8 +23,8 @@ class WPMazic_IndexNow {
      * Register query var for key endpoint.
      */
     public function register_rewrite() {
-        add_rewrite_rule( '^indexnow-key/([A-Za-z0-9]+)\.txt$', 'index.php?wpmazic_indexnow_key=$matches[1]', 'top' );
-        add_rewrite_tag( '%wpmazic_indexnow_key%', '([A-Za-z0-9]+)' );
+        add_rewrite_rule( '^indexnow-key/([A-Za-z0-9-]+)\.txt$', 'index.php?wpmazic_indexnow_key=$matches[1]', 'top' );
+        add_rewrite_tag( '%wpmazic_indexnow_key%', '([A-Za-z0-9-]+)' );
     }
 
     /**
@@ -118,7 +118,7 @@ class WPMazic_IndexNow {
 
         global $wpdb;
         $wpdb->insert(
-            $wpdb->prefix . 'wpmazic_indexnow',
+            wpmazic_seo_get_table_name( 'indexnow' ),
             array(
                 'url'      => $url,
                 'status'   => $status,

@@ -1,109 +1,33 @@
 # WPMazic SEO Lite
 
-## WPMazic SEO Lite – Simple & Powerful SEO Toolkit for WordPress
+WPMazic SEO Lite is a lightweight SEO toolkit for WordPress.
 
-WPMazic SEO Lite is a lightweight and user-friendly SEO plugin designed to help you optimize your WordPress website without complexity.
+It includes metadata controls, XML sitemap support, schema output, redirects, 404 monitoring, breadcrumbs, image SEO, IndexNow support, and migration tools.
 
-It provides essential SEO tools like metadata management, XML sitemaps, schema support, redirects, and 404 monitoring — all in one place.
+## Highlights
 
-Built for performance and ease of use, WPMazic SEO Lite helps improve your site's visibility in search engines while keeping full control in your hands.
+- SEO title and meta description controls
+- XML sitemap and image sitemap support
+- Schema output for common content types
+- Redirect manager and 404 monitor
+- Open Graph and Twitter card support
+- Robots.txt editor and llms.txt endpoint
+- Bulk editor and migration wizard
 
-🌐 Official Website: https://wpmazic.com/  
+## External Services
 
----
+WPMazic SEO Lite does not connect to external services by default.
 
-## 📌 Overview
+- Google Analytics 4 tracking is optional. If enabled and configured, the plugin loads `gtag.js` from Google on frontend page loads and sends analytics requests that include the Measurement ID, page URL, and standard browser/device request data.
+  Terms: https://policies.google.com/terms
+  Privacy: https://policies.google.com/privacy
+- IndexNow submission is optional. If enabled, the plugin sends the changed URL, site host, IndexNow key, and key location URL to `https://api.indexnow.org/indexnow` when supported content is published or updated, or when the manual batch tool is run.
+  Documentation: https://www.indexnow.org/documentation
+  Terms: https://www.indexnow.org/terms
+  Privacy: https://www.indexnow.org/terms
 
-Search engine optimization is essential for any website. WPMazic SEO Lite focuses on the fundamentals you actually need:
+## Installation
 
-- Manage meta titles and descriptions  
-- Improve indexing and crawlability  
-- Generate XML sitemaps  
-- Handle redirects and 404 errors  
-- Add structured data (schema)  
-
-No unnecessary complexity. No bloated features.
-
----
-
-## 🔧 Key Features
-
-### ⚙️ Metadata Management
-- Set custom meta titles and descriptions  
-- Control indexing (noindex, nofollow)  
-- Optimize posts, pages, and custom post types  
-
-### 🗺️ XML Sitemap Support
-- Automatically generate XML sitemaps  
-- Help search engines discover your content faster  
-
-### 🔗 Redirect Manager
-- Create and manage URL redirects  
-- Fix broken links and improve user experience  
-
-### 🚫 404 Monitoring
-- Track not found pages  
-- Identify and fix broken URLs  
-
-### 🧩 Basic Schema Support
-- Add structured data for better search visibility  
-- Supports common schema types  
-
-### ⚡ Lightweight & Fast
-- Minimal impact on website performance  
-- Clean and optimized code  
-
----
-
-## 🎯 Who Should Use It?
-
-WPMazic SEO Lite is suitable for:
-
-- WordPress site owners  
-- Bloggers  
-- Developers  
-- Small businesses  
-- Agencies managing multiple sites  
-
----
-
-## 📈 Benefits
-
-- Improve search engine visibility  
-- Fix SEO issues easily  
-- Better indexing of your website  
-- Cleaner site structure  
-- No technical expertise required  
-
----
-
-## 📸 WPMazic SEO Pro & Lite Version  Screenshots
-
-![Dashboard](screenshots/dashboard.png)  
-![SEO Tools](screenshots/seo-settings.png)  
-![SEO Analysis](screenshots/redirect.png)  
-![SEO Health](screenshots/monitor.png)
-
----
-
-
-## 🎥 Live Demo (Pro Version)
-
-[![Watch Demo](https://img.youtube.com/vi/KoTHiBDS1_Y/0.jpg)](https://youtu.be/KoTHiBDS1_Y)
-
-👉 Click above to watch WPMazic SEO Pro in action.
-
----
-
-## 🛠️ Installation
-
-### From WordPress Dashboard
-1. Go to Plugins → Add New  
-2. Search for "WPMazic SEO Lite"  
-3. Click Install Now  
-4. Activate the plugin  
-
-### Manual Installation
-
-```bash
-git clone https://github.com/wpmazic/wpmazic-seo-lite.git
+1. Upload the plugin folder to `/wp-content/plugins/`.
+2. Activate the plugin from the WordPress admin Plugins screen.
+3. Open the WPMazic SEO admin pages to configure site settings.

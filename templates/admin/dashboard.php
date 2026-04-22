@@ -107,8 +107,8 @@ $table_exists = static function ($table_name) use ($wpdb) {
     return is_string($found) && $found === $table_name;
 };
 
-$redirects_table = $wpdb->prefix . 'wpmazic_redirects';
-$errors_table = $wpdb->prefix . 'wpmazic_404';
+$redirects_table = wpmazic_seo_get_table_name( 'redirects' );
+$errors_table = wpmazic_seo_get_table_name( '404' );
 
 $redirects = $table_exists($redirects_table) ? (int) $wpdb->get_var("SELECT COUNT(*) FROM {$redirects_table}") : 0; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 $errors_404 = $table_exists($errors_table) ? (int) $wpdb->get_var("SELECT COUNT(*) FROM {$errors_table}") : 0; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -362,12 +362,10 @@ wpmazic_seo_admin_shell_open(
             'enable_image_seo' => __('Image SEO', 'wpmazic-seo-lite'),
             'enable_indexnow' => __('IndexNow', 'wpmazic-seo-lite'),
             'enable_link_tracking' => __('Internal Link Tracking', 'wpmazic-seo-lite'),
-            'enable_generator_meta' => __('Plugin Branding Meta Tag', 'wpmazic-seo-lite'),
             'enable_llms_txt' => __('llms.txt Endpoint', 'wpmazic-seo-lite'),
             'enable_image_sitemap' => __('Image Sitemap', 'wpmazic-seo-lite'),
             'enable_auto_slug_redirect' => __('Auto Slug Redirect', 'wpmazic-seo-lite'),
             'enable_dynamic_og_image' => __('Dynamic OG Image', 'wpmazic-seo-lite'),
-            'enable_auto_search_ping' => __('Search Engine Ping', 'wpmazic-seo-lite'),
             'enable_security_bad_bots' => __('Bad Bot Blocker', 'wpmazic-seo-lite'),
             'enable_security_headers' => __('Security Headers', 'wpmazic-seo-lite'),
             'enable_security_disable_xmlrpc' => __('Disable XML-RPC', 'wpmazic-seo-lite'),

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $wpdb;
-$table = $wpdb->prefix . 'wpmazic_404';
+$table = wpmazic_seo_get_table_name( '404' );
 
 if ( isset( $_POST['wpmazic_delete_404_id'] ) && check_admin_referer( 'wpmazic_delete_404' ) ) {
     if ( ! current_user_can( 'manage_options' ) ) {

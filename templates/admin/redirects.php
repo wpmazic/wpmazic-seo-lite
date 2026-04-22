@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $wpdb;
-$table = $wpdb->prefix . 'wpmazic_redirects';
+$table = wpmazic_seo_get_table_name( 'redirects' );
 
 $redirect_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 

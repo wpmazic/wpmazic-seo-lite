@@ -226,14 +226,13 @@ class WPMazic_Security
             return;
         }
 
-        $request_uri = isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '';
-        $author_qs = isset($_GET['author']) ? sanitize_text_field(wp_unslash($_GET['author'])) : '';
+        $author_id = absint(get_query_var('author'));
+        $author_name = sanitize_title_for_query((string) get_query_var('author_name'));
 
-        $has_author_query = '' !== trim((string) $author_qs);
-        $is_author_path = false !== stripos((string) $request_uri, '/author/');
+        $has_author_query = $author_id > 0 || '' !== $author_name;
         $is_author_page = function_exists('is_author') && is_author();
 
-        if ($has_author_query || $is_author_path || $is_author_page) {
+        if ($has_author_query || $is_author_page) {
             $this->deny_request(404, __('Not Found', 'wpmazic-seo-lite'));
         }
     }

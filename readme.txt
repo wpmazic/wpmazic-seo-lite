@@ -23,26 +23,26 @@ WPMazic SEO Lite helps you launch SEO fundamentals quickly.
 * Schema output for common content types including Article, FAQ, Product, and LocalBusiness
 * Open Graph, Twitter Cards, dynamic OG image fallback, and author SEO enhancements
 * Redirect manager, 404 monitor, and auto slug redirect
-* Search engine verification tags, robots.txt editor, llms.txt editor, IndexNow, and optional search engine ping
+* Search engine verification tags, robots.txt editor, llms.txt editor, and IndexNow
 * Bulk editor, migration wizard, local SEO, breadcrumbs, image SEO, and internal link tools
 
 == External services ==
 
-This plugin can optionally connect to third-party services only when the corresponding feature is enabled or configured by the site owner.
+This plugin does not connect to external services by default. External requests happen only if the site owner enables and configures the relevant feature.
 
-* Google Analytics 4 frontend tracking: when frontend tracking is enabled and a GA4 Measurement ID is saved, the plugin loads `gtag.js` from `www.googletagmanager.com` on the frontend and sends pageview analytics events to Google when visitors load the site. GA4 Measurement IDs are public identifiers and appear in page source as part of the tracking tag.
-  Terms: https://developers.google.com/terms/
+* Google Analytics 4 frontend tracking: this is used to load Google Analytics tracking on the public site. When the site owner enables GA4 tracking and saves a Measurement ID, the plugin loads `gtag.js` from `www.googletagmanager.com` and sends pageview-related analytics requests to Google when visitors load frontend pages. The Measurement ID is included in page source, and Google may also receive the visitor's page URL plus standard browser and device request data needed for analytics delivery.
+  Terms: https://policies.google.com/terms
   Privacy: https://policies.google.com/privacy
-* IndexNow: when IndexNow is enabled or a manual batch submission is triggered, the plugin sends your submitted URL, site host, API key, and key location URL to `api.indexnow.org`.
-  Protocol: https://www.indexnow.org/documentation
-  Privacy: https://www.microsoft.com/en-us/privacy/privacystatement
-* Search engine ping endpoints: when Auto Ping Search Engines is enabled, the plugin sends your sitemap URL to Google and Bing ping endpoints after publish or update events.
-  Google Privacy: https://policies.google.com/privacy
-  Microsoft Privacy: https://www.microsoft.com/en-us/privacy/privacystatement
+* IndexNow submission: this is used to notify participating search engines that a URL was added, updated, or deleted. When the site owner enables IndexNow, the plugin sends the changed page URL, the site host, the configured IndexNow key, and the key location URL to `https://api.indexnow.org/indexnow` when supported content is published or updated. The same data is also sent when the site owner manually runs the IndexNow batch tool from the plugin's Tools screen.
+  Documentation: https://www.indexnow.org/documentation
+  Terms: https://www.indexnow.org/terms
+  Privacy: https://www.indexnow.org/terms
 
 == Privacy ==
 
-WPMazic SEO Lite stores plugin settings in your WordPress database. It does not collect personal data by default.
+WPMazic SEO Lite stores plugin settings in your WordPress database.
+
+If the 404 Monitor feature is enabled, the plugin also stores the requested 404 URL, the referring URL when available, the hit count, and the last-hit timestamp for logged 404 events.
 
 If you enable features that connect to external services (see the "External services" section), your site may send data to those services as described there.
 
@@ -80,8 +80,8 @@ No. Admin CSS and JS are bundled locally inside the plugin package.
 
 == Support ==
 
-For documentation and support, visit:
-https://wpmazic.com/
+Support is handled through the plugin support forum:
+https://wordpress.org/support/plugin/wpmazic-seo-lite/
 
 == Changelog ==
 

@@ -88,9 +88,6 @@ class WPMazic_Admin
         if (isset($settings['rss_after_content'])) {
             $clean['rss_after_content'] = WPMazic_Security::sanitize_textarea($settings['rss_after_content']);
         }
-        if (isset($settings['generator_meta_text'])) {
-            $clean['generator_meta_text'] = WPMazic_Security::sanitize_text($settings['generator_meta_text']);
-        }
         if (isset($settings['google_site_verification'])) {
             $clean['google_site_verification'] = WPMazic_Security::sanitize_text($settings['google_site_verification']);
         }
@@ -173,12 +170,10 @@ class WPMazic_Admin
             'enable_image_seo',
             'enable_indexnow',
             'enable_link_tracking',
-            'enable_generator_meta',
             'enable_llms_txt',
             'enable_image_sitemap',
             'enable_auto_slug_redirect',
             'enable_dynamic_og_image',
-            'enable_auto_search_ping',
             'enable_ga4_tracking',
             'enable_security_bad_bots',
             'enable_security_headers',
@@ -254,7 +249,7 @@ class WPMazic_Admin
 
         // --- IndexNow -----------------------------------------------------
         if (isset($settings['indexnow_api_key'])) {
-            $clean['indexnow_api_key'] = preg_replace('/[^a-zA-Z0-9]/', '', (string) $settings['indexnow_api_key']);
+            $clean['indexnow_api_key'] = preg_replace('/[^a-zA-Z0-9-]/', '', (string) $settings['indexnow_api_key']);
         }
 
         // --- Noindex toggles -----------------------------------------------
@@ -361,6 +356,31 @@ class WPMazic_Admin
         return '';
     }
 
+    /**
+     * Decode a JSON request payload into a sanitized array.
+     *
+     * @param string $raw_payload Raw JSON string.
+     * @return array|WP_Error
+     */
+    private function decode_json_request_array($raw_payload)
+    {
+        if (!is_string($raw_payload)) {
+            return new WP_Error('wpmazic_invalid_payload', __('Invalid request payload.', 'wpmazic-seo-lite'));
+        }
+
+        $raw_payload = wp_check_invalid_utf8($raw_payload);
+        if ('' === trim($raw_payload)) {
+            return new WP_Error('wpmazic_empty_payload', __('Request payload is empty.', 'wpmazic-seo-lite'));
+        }
+
+        $decoded = json_decode($raw_payload, true);
+        if (JSON_ERROR_NONE !== json_last_error() || !is_array($decoded)) {
+            return new WP_Error('wpmazic_invalid_json', __('Invalid JSON payload.', 'wpmazic-seo-lite'));
+        }
+
+        return $this->sanitize_decoded_payload($decoded);
+    }
+
     // ------------------------------------------------------------------
     // AJAX: Save Settings
     // ------------------------------------------------------------------
@@ -375,7 +395,7 @@ class WPMazic_Admin
         $this->verify_ajax_request();
 
         // SECURITY: Get and validate input
-        $raw_settings = isset($_POST['settings']) ? wp_unslash($_POST['settings']) : '';
+        $raw_settings = isset($_POST['settings']) ? $_POST['settings'] : array();
 
         // Validate input is not empty
         if (empty($raw_settings)) {
@@ -384,14 +404,12 @@ class WPMazic_Admin
 
         // Support JSON-encoded payload from JS.
         if (is_string($raw_settings)) {
-            $decoded = json_decode($raw_settings, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                $settings = $this->sanitize_decoded_payload($decoded);
-            } else {
-                wp_send_json_error(array('message' => __('Invalid settings data format.', 'wpmazic-seo-lite')));
+            $settings = $this->decode_json_request_array(wp_unslash($raw_settings));
+            if (is_wp_error($settings)) {
+                wp_send_json_error(array('message' => $settings->get_error_message()));
             }
         } elseif (is_array($raw_settings)) {
-            $settings = $this->sanitize_decoded_payload($raw_settings);
+            $settings = $this->sanitize_decoded_payload(wp_unslash($raw_settings));
         } else {
             $settings = array();
         }
@@ -441,11 +459,11 @@ class WPMazic_Admin
             : 0;
 
         // Redirects table
-        $redirects_table = $wpdb->prefix . 'wpmazic_redirects';
+        $redirects_table = wpmazic_seo_get_table_name( 'redirects' );
         $total_redirects = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$redirects_table}");
 
         // 404 table
-        $errors_table = $wpdb->prefix . 'wpmazic_404';
+        $errors_table = wpmazic_seo_get_table_name( '404' );
         $total_404s = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$errors_table}");
 
         $stats = array(
@@ -485,7 +503,7 @@ class WPMazic_Admin
         $this->verify_ajax_request();
 
         // SECURITY: Get and validate input
-        $items_raw = isset($_POST['items']) ? wp_unslash($_POST['items']) : '';
+        $items_raw = isset($_POST['items']) ? $_POST['items'] : array();
 
         // Validate input is not empty
         if (empty($items_raw)) {
@@ -494,15 +512,12 @@ class WPMazic_Admin
 
         // Decode JSON if needed
         if (is_array($items_raw)) {
-            $items = $this->sanitize_decoded_payload($items_raw);
+            $items = $this->sanitize_decoded_payload(wp_unslash($items_raw));
         } else {
-            $decoded_items = json_decode($items_raw, true);
-            $items = is_array($decoded_items) ? $this->sanitize_decoded_payload($decoded_items) : $decoded_items;
-        }
-
-        // Validate JSON decoding succeeded
-        if (null === $items && json_last_error() !== JSON_ERROR_NONE) {
-            wp_send_json_error(array('message' => __('Invalid data format.', 'wpmazic-seo-lite')));
+            $items = $this->decode_json_request_array(wp_unslash($items_raw));
+            if (is_wp_error($items)) {
+                wp_send_json_error(array('message' => __('Invalid data format.', 'wpmazic-seo-lite')));
+            }
         }
 
         if (empty($items) || !is_array($items)) {
@@ -600,7 +615,7 @@ class WPMazic_Admin
             wp_send_json_error(array('message' => __('Invalid redirect ID.', 'wpmazic-seo-lite')));
         }
 
-        $table = $wpdb->prefix . 'wpmazic_redirects';
+        $table = wpmazic_seo_get_table_name( 'redirects' );
         $deleted = $wpdb->delete($table, array('id' => $id), array('%d'));
 
         if (false === $deleted) {
@@ -629,7 +644,7 @@ class WPMazic_Admin
             wp_send_json_error(array('message' => __('Invalid 404 entry ID.', 'wpmazic-seo-lite')));
         }
 
-        $table = $wpdb->prefix . 'wpmazic_404';
+        $table = wpmazic_seo_get_table_name( '404' );
         $deleted = $wpdb->delete($table, array('id' => $id), array('%d'));
 
         if (false === $deleted) {
@@ -686,7 +701,7 @@ class WPMazic_Admin
         $cleaned = 0;
 
         // 1. Delete 404 entries older than 90 days.
-        $errors_table = $wpdb->prefix . 'wpmazic_404';
+        $errors_table = wpmazic_seo_get_table_name( '404' );
         $cleaned += (int) $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM {$errors_table} WHERE created_at < %s",
@@ -704,8 +719,8 @@ class WPMazic_Admin
 
         // 3. Optimize plugin tables.
         $tables = array(
-            $wpdb->prefix . 'wpmazic_redirects',
-            $wpdb->prefix . 'wpmazic_404',
+            wpmazic_seo_get_table_name( 'redirects' ),
+            wpmazic_seo_get_table_name( '404' ),
         );
         foreach ($tables as $table) {
             $wpdb->query("OPTIMIZE TABLE {$table}"); // phpcs:ignore WordPress.DB.PreparedSQL

@@ -37,7 +37,7 @@ $normalize_text = static function ( $value ) {
     return strtolower( (string) $value );
 };
 
-$links_table      = $wpdb->prefix . 'wpmazic_links';
+$links_table      = wpmazic_seo_get_table_name( 'links' );
 $has_links_table  = ( $links_table === $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $links_table ) ) );
 $outbound_map     = array();
 $inbound_map      = array();
@@ -94,10 +94,10 @@ if ( $has_links_table ) {
     }
 
     $error_rows = $wpdb->get_results(
-        "SELECT url, hits
-         FROM {$wpdb->prefix}wpmazic_404
+        'SELECT url, hits
+         FROM ' . wpmazic_seo_get_table_name( '404' ) . '
          ORDER BY hits DESC
-         LIMIT 1000", // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+         LIMIT 1000', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         ARRAY_A
     );
     $error_path_hits = array();

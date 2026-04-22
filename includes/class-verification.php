@@ -42,14 +42,12 @@ class WPMazic_Verification
             return;
         }
 
-        echo "<!-- WPMazic Verification -->\n";
         foreach ($tags as $name => $content) {
             if ('' === $content) {
                 continue;
             }
             echo '<meta name="' . esc_attr($name) . '" content="' . esc_attr($content) . '">' . "\n";
         }
-        echo "<!-- /WPMazic Verification -->\n";
     }
 
     /**

@@ -43,7 +43,7 @@ if ( isset( $_POST['wpmazic_bulk_save'] ) && check_admin_referer( 'wpmazic_bulk_
         $saved++;
     }
 
-    wpmazic_seo_lite_add_notice( 'success', sprintf( __( '%d posts updated.', 'wpmazic-seo-lite' ), (int) $saved ) );
+    wpmazic_seo_lite_add_notice( 'success', sprintf( esc_html__( '%d posts updated.', 'wpmazic-seo-lite' ), absint( $saved ) ) );
     }
 }
 

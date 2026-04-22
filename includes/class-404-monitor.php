@@ -20,13 +20,8 @@ class WPMazic_Monitor_404 {
         global $wpdb;
 
         $url         = $this->get_current_request_path();
-        $referer     = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
-        $user_agent  = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
-        $ip_address  = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-
-        $referer    = substr( $referer, 0, 500 );
-        $user_agent = substr( $user_agent, 0, 500 );
-        $ip_address = substr( $ip_address, 0, 45 );
+        $referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
+        $referer = substr( $referer, 0, 500 );
 
         if ( '' === $url ) {
             return;
@@ -34,41 +29,37 @@ class WPMazic_Monitor_404 {
 
         $row = $wpdb->get_row(
             $wpdb->prepare(
-                "SELECT id, hits FROM {$wpdb->prefix}wpmazic_404 WHERE url = %s LIMIT 1",
+                'SELECT id, hits FROM ' . wpmazic_seo_get_table_name( '404' ) . ' WHERE url = %s LIMIT 1',
                 $url
             )
         );
 
         if ( $row ) {
             $wpdb->update(
-                $wpdb->prefix . 'wpmazic_404',
+                wpmazic_seo_get_table_name( '404' ),
                 array(
                     'hits'       => (int) $row->hits + 1,
                     'last_hit'   => current_time( 'mysql' ),
                     'referer'    => $referer,
-                    'user_agent' => $user_agent,
-                    'ip_address' => $ip_address,
                 ),
                 array(
                     'id' => (int) $row->id,
                 ),
-                array( '%d', '%s', '%s', '%s', '%s' ),
+                array( '%d', '%s', '%s' ),
                 array( '%d' )
             );
             return;
         }
 
         $wpdb->insert(
-            $wpdb->prefix . 'wpmazic_404',
+            wpmazic_seo_get_table_name( '404' ),
             array(
                 'url'        => $url,
                 'referer'    => $referer,
-                'user_agent' => $user_agent,
-                'ip_address' => $ip_address,
                 'hits'       => 1,
                 'last_hit'   => current_time( 'mysql' ),
             ),
-            array( '%s', '%s', '%s', '%s', '%d', '%s' )
+            array( '%s', '%s', '%d', '%s' )
         );
 
     }
@@ -79,7 +70,7 @@ class WPMazic_Monitor_404 {
      * @return string
      */
     private function get_current_request_path() {
-        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_sanitize_redirect( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
         if ( '' === $request_uri ) {
             return '';
         }

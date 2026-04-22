@@ -23,6 +23,7 @@ class WPMazic_Author_SEO {
         }
         ?>
         <h2><?php esc_html_e( 'WPMazic Author SEO', 'wpmazic-seo-lite' ); ?></h2>
+        <?php wp_nonce_field( 'wpmazic_author_seo_profile', 'wpmazic_author_seo_nonce' ); ?>
         <table class="form-table" role="presentation">
             <tr>
                 <th><label for="wpmazic_author_job_title"><?php esc_html_e( 'Job Title', 'wpmazic-seo-lite' ); ?></label></th>
@@ -58,9 +59,31 @@ class WPMazic_Author_SEO {
             return;
         }
 
+        $nonce = isset( $_POST['wpmazic_author_seo_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wpmazic_author_seo_nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'wpmazic_author_seo_profile' ) ) {
+            return;
+        }
+
         $job_title = isset( $_POST['wpmazic_author_job_title'] ) ? sanitize_text_field( wp_unslash( $_POST['wpmazic_author_job_title'] ) ) : '';
         $expertise = isset( $_POST['wpmazic_author_expertise'] ) ? sanitize_text_field( wp_unslash( $_POST['wpmazic_author_expertise'] ) ) : '';
-        $sameas    = isset( $_POST['wpmazic_author_sameas'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wpmazic_author_sameas'] ) ) : '';
+        $sameas    = '';
+
+        if ( isset( $_POST['wpmazic_author_sameas'] ) ) {
+            $sameas_lines = preg_split( '/\r\n|\r|\n/', (string) wp_unslash( $_POST['wpmazic_author_sameas'] ) );
+            if ( is_array( $sameas_lines ) ) {
+                $clean_sameas = array();
+                foreach ( $sameas_lines as $line ) {
+                    $line = esc_url_raw( trim( (string) $line ) );
+                    if ( '' !== $line ) {
+                        $clean_sameas[] = $line;
+                    }
+                }
+
+                if ( ! empty( $clean_sameas ) ) {
+                    $sameas = implode( "\n", array_values( array_unique( $clean_sameas ) ) );
+                }
+            }
+        }
 
         update_user_meta( $user_id, 'wpmazic_author_job_title', $job_title );
         update_user_meta( $user_id, 'wpmazic_author_expertise', $expertise );

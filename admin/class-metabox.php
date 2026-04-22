@@ -618,11 +618,11 @@ class WPMazic_Metabox
                             <div class="wpmazic-faq-item-row">
                                 <div class="wpmazic-faq-item-fields">
                                     <label
-                                        class="wpmazic-faq-question-label"><?php printf(esc_html__('Question %d', 'wpmazic-seo-lite'), $i + 1); ?></label>
+                                        class="wpmazic-faq-question-label"><?php printf( esc_html__( 'Question %d', 'wpmazic-seo-lite' ), absint( $i + 1 ) ); ?></label>
                                     <input type="text" name="wpmazic_faq_question[]" value="<?php echo esc_attr($question); ?>"
                                         placeholder="<?php esc_attr_e('Enter question', 'wpmazic-seo-lite'); ?>" />
                                     <label class="wpmazic-faq-answer-label"
-                                        style="margin:8px 0 4px;"><?php printf(esc_html__('Answer %d', 'wpmazic-seo-lite'), $i + 1); ?></label>
+                                        style="margin:8px 0 4px;"><?php printf( esc_html__( 'Answer %d', 'wpmazic-seo-lite' ), absint( $i + 1 ) ); ?></label>
                                     <textarea name="wpmazic_faq_answer[]" rows="3"
                                         placeholder="<?php esc_attr_e('Enter short answer', 'wpmazic-seo-lite'); ?>"><?php echo esc_textarea($answer); ?></textarea>
                                 </div>

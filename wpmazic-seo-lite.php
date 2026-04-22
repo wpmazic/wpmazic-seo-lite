@@ -175,7 +175,7 @@ if ( ! defined( 'WPMAZIC_SEO_VERSION' ) ) {
     define( 'WPMAZIC_SEO_VERSION', '1.0.0' );
 }
 if ( ! defined( 'WPMAZIC_SEO_DB_VERSION' ) ) {
-    define( 'WPMAZIC_SEO_DB_VERSION', '2.8.0' );
+    define( 'WPMAZIC_SEO_DB_VERSION', '2.9.0' );
 }
 if ( ! defined( 'WPMAZIC_SEO_EDITION' ) ) {
     define( 'WPMAZIC_SEO_EDITION', 'lite' );
@@ -212,6 +212,81 @@ function wpmazic_seo_get_settings() {
     $stored = is_array( $stored ) ? $stored : array();
 
     return array_merge( wpmazic_seo_get_default_settings(), $stored );
+}
+
+/**
+ * Get a custom plugin table name with the enforced SEO prefix.
+ *
+ * @param string $table_key Logical table key.
+ * @return string
+ */
+function wpmazic_seo_get_table_name( $table_key ) {
+    global $wpdb;
+
+    $table_map = array(
+        'redirects' => 'wpmazic_seo_redirects',
+        '404'       => 'wpmazic_seo_404',
+        'links'     => 'wpmazic_seo_links',
+        'indexnow'  => 'wpmazic_seo_indexnow',
+    );
+
+    $table_key = (string) $table_key;
+    if ( ! isset( $table_map[ $table_key ] ) ) {
+        return '';
+    }
+
+    return $wpdb->prefix . $table_map[ $table_key ];
+}
+
+/**
+ * Get a legacy custom table name used by older plugin versions.
+ *
+ * @param string $table_key Logical table key.
+ * @return string
+ */
+function wpmazic_seo_get_legacy_table_name( $table_key ) {
+    global $wpdb;
+
+    $table_map = array(
+        'redirects' => 'wpmazic_redirects',
+        '404'       => 'wpmazic_404',
+        'links'     => 'wpmazic_links',
+        'indexnow'  => 'wpmazic_indexnow',
+    );
+
+    $table_key = (string) $table_key;
+    if ( ! isset( $table_map[ $table_key ] ) ) {
+        return '';
+    }
+
+    return $wpdb->prefix . $table_map[ $table_key ];
+}
+
+/**
+ * Rename older custom tables to the current SEO-prefixed names.
+ *
+ * @return void
+ */
+function wpmazic_seo_migrate_legacy_table_names() {
+    global $wpdb;
+
+    $table_keys = array( 'redirects', '404', 'links', 'indexnow' );
+
+    foreach ( $table_keys as $table_key ) {
+        $legacy_table  = wpmazic_seo_get_legacy_table_name( $table_key );
+        $current_table = wpmazic_seo_get_table_name( $table_key );
+
+        if ( '' === $legacy_table || '' === $current_table ) {
+            continue;
+        }
+
+        $legacy_exists  = ( $legacy_table === $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $legacy_table ) ) );
+        $current_exists = ( $current_table === $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $current_table ) ) );
+
+        if ( $legacy_exists && ! $current_exists ) {
+            $wpdb->query( "RENAME TABLE {$legacy_table} TO {$current_table}" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        }
+    }
 }
 
 /**
@@ -273,7 +348,6 @@ function wpmazic_seo_get_default_settings() {
         'enable_image_seo'     => 1,
         'enable_indexnow'      => 0,
         'enable_link_tracking' => 1,
-        'enable_generator_meta' => 0,
         'enable_security_bad_bots' => 0,
         'enable_security_headers' => 0,
         'enable_security_disable_xmlrpc' => 0,
@@ -301,8 +375,6 @@ function wpmazic_seo_get_default_settings() {
         'ga4_measurement_id' => '',
         'enable_ga4_tracking' => 0,
         'enable_dynamic_og_image' => 1,
-        'enable_auto_search_ping' => 0,
-        'generator_meta_text' => 'WPMazic SEO',
         'title_template_singular' => '%title% %sep% %sitename%',
         'description_template_singular' => '%excerpt%',
         'rss_before_content'   => '',
@@ -337,6 +409,8 @@ function wpmazic_seo_activate( $show_wizard = true ) {
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
+    wpmazic_seo_migrate_legacy_table_names();
+
     $charset  = $wpdb->get_charset_collate();
     $defaults = wpmazic_seo_get_default_settings();
     $existing = get_option( 'wpmazic_settings', array() );
@@ -348,7 +422,7 @@ function wpmazic_seo_activate( $show_wizard = true ) {
         update_option( 'wpmazic_settings', array_merge( $defaults, $existing ) );
     }
 
-    $table_redirects = $wpdb->prefix . 'wpmazic_redirects';
+    $table_redirects = wpmazic_seo_get_table_name( 'redirects' );
     dbDelta( "CREATE TABLE {$table_redirects} (
         id          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
         source      varchar(500)        NOT NULL DEFAULT '',
@@ -363,7 +437,7 @@ function wpmazic_seo_activate( $show_wizard = true ) {
         KEY status_idx (status)
     ) {$charset};" );
 
-    $table_404 = $wpdb->prefix . 'wpmazic_404';
+    $table_404 = wpmazic_seo_get_table_name( '404' );
     dbDelta( "CREATE TABLE {$table_404} (
         id          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
         url         varchar(500)        NOT NULL DEFAULT '',
@@ -378,7 +452,7 @@ function wpmazic_seo_activate( $show_wizard = true ) {
         KEY last_hit_idx (last_hit)
     ) {$charset};" );
 
-    $table_links = $wpdb->prefix . 'wpmazic_links';
+    $table_links = wpmazic_seo_get_table_name( 'links' );
     dbDelta( "CREATE TABLE {$table_links} (
         id             bigint(20) unsigned NOT NULL AUTO_INCREMENT,
         post_id        bigint(20) unsigned NOT NULL DEFAULT 0,
@@ -393,7 +467,7 @@ function wpmazic_seo_activate( $show_wizard = true ) {
         KEY type_idx (type)
     ) {$charset};" );
 
-    $table_indexnow = $wpdb->prefix . 'wpmazic_indexnow';
+    $table_indexnow = wpmazic_seo_get_table_name( 'indexnow' );
     dbDelta( "CREATE TABLE {$table_indexnow} (
         id           bigint(20) unsigned NOT NULL AUTO_INCREMENT,
         url          varchar(500)        NOT NULL DEFAULT '',
@@ -416,7 +490,6 @@ register_activation_hook( __FILE__, 'wpmazic_seo_activate' );
 register_deactivation_hook(
     __FILE__,
     function () {
-        wp_clear_scheduled_hook( 'wpmazic_seo_weekly_email_report' );
         flush_rewrite_rules();
     }
 );
@@ -450,7 +523,6 @@ $wpmazic_feature_files = array(
     'includes/class-migration.php',
     'includes/class-image-sitemap.php',
     'includes/class-verification.php',
-    'includes/class-search-ping.php',
     'includes/class-dynamic-og.php',
 );
 
@@ -527,10 +599,6 @@ add_action(
 
         if ( class_exists( 'WPMazic_Verification' ) ) {
             new WPMazic_Verification();
-        }
-
-        if ( class_exists( 'WPMazic_Search_Ping' ) ) {
-            new WPMazic_Search_Ping();
         }
 
         if ( class_exists( 'WPMazic_Dynamic_OG' ) ) {
@@ -798,8 +866,6 @@ function wpmazic_seo_admin_shell_open( $title, $description = '' ) {
         $grouped_nav[ __( 'More', 'wpmazic-seo-lite' ) ] = $unassigned;
     }
 
-    $docs_url    = 'https://wpmazic.com/wpmazic-seo-lite/';
-    $support_url = 'https://wpmazic.com/my-account/support-tickets';
     $logo_candidates = array(
         'assets/images/brand-logo-48.png',
         'assets/images/brand-logo-64.png',
@@ -886,12 +952,6 @@ function wpmazic_seo_admin_shell_open( $title, $description = '' ) {
                             <span><?php esc_html_e( 'Ready', 'wpmazic-seo-lite' ); ?></span>
                         </div>
                         <div class="wmz-shell-actionbar-actions">
-                            <a href="<?php echo esc_url( $docs_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-                                <?php esc_html_e( 'Docs', 'wpmazic-seo-lite' ); ?>
-                            </a>
-                            <a href="<?php echo esc_url( $support_url ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary">
-                                <?php esc_html_e( 'Support', 'wpmazic-seo-lite' ); ?>
-                            </a>
                             <button type="button" class="button button-primary wmz-shell-save-trigger">
                                 <?php esc_html_e( 'Save This Page', 'wpmazic-seo-lite' ); ?>
                             </button>

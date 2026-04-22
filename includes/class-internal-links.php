@@ -100,7 +100,7 @@ class WPMazic_Internal_Links {
     private function store_links( $post_id, $links ) {
         global $wpdb;
 
-        $table = $wpdb->prefix . 'wpmazic_links';
+        $table = wpmazic_seo_get_table_name( 'links' );
         $this->clear_post_links( $post_id );
 
         if ( empty( $links ) ) {
@@ -131,7 +131,7 @@ class WPMazic_Internal_Links {
         global $wpdb;
 
         $wpdb->delete(
-            $wpdb->prefix . 'wpmazic_links',
+            wpmazic_seo_get_table_name( 'links' ),
             array(
                 'post_id' => (int) $post_id,
             ),

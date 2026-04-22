@@ -63,23 +63,6 @@ class WPMazic_Meta_Tags {
     }
 
     /**
-     * Output optional plugin branding generator meta.
-     */
-    private function output_generator_meta() {
-        $enabled = (int) $this->get_setting( 'enable_generator_meta', 0 ) === 1;
-        if ( ! $enabled ) {
-            return;
-        }
-
-        $content = trim( (string) $this->get_setting( 'generator_meta_text', 'WPMazic SEO' ) );
-        if ( '' === $content ) {
-            return;
-        }
-
-        echo '<meta name="generator" content="' . esc_attr( $content ) . '">' . "\n";
-    }
-
-    /**
      * Clip text to a max length with ellipsis.
      */
     private function clip_text($text, $limit = 160) {
@@ -505,9 +488,6 @@ class WPMazic_Meta_Tags {
         $image       = $this->get_page_image();
         $og_type     = $this->get_og_type();
 
-        echo "\n<!-- WPMazic SEO -->\n";
-        $this->output_generator_meta();
-
         // --- Standard meta tags ------------------------------------------
 
         if (!empty($title)) {
@@ -543,8 +523,6 @@ class WPMazic_Meta_Tags {
         if ($this->is_og_enabled()) {
             $this->output_twitter_tags($title, $description, $image);
         }
-
-        echo "<!-- /WPMazic SEO -->\n\n";
     }
 
     /**

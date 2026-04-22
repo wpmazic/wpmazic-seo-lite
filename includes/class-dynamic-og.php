@@ -69,17 +69,18 @@ class WPMazic_Dynamic_OG {
         $title = wp_strip_all_tags( (string) $title );
         $title = $this->truncate_text( $title, 110 );
 
-        $site_name = wp_strip_all_tags( (string) get_bloginfo( 'name' ) );
-        $subtitle  = $this->truncate_text( $site_name, 45 );
+        $site_name  = wp_strip_all_tags( (string) get_bloginfo( 'name' ) );
+        $brand_line = $this->truncate_text( $site_name, 45 );
+        $subtitle   = $this->truncate_text( $site_name, 45 );
 
         nocache_headers();
         header( 'Content-Type: image/svg+xml; charset=utf-8' );
 
-        $svg  = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="' . esc_attr__( 'WPMazic dynamic social image', 'wpmazic-seo-lite' ) . '">';
+        $svg  = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="' . esc_attr__( 'Dynamic social image', 'wpmazic-seo-lite' ) . '">';
         $svg .= '<defs><linearGradient id="wmzGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient></defs>';
         $svg .= '<rect width="1200" height="630" fill="url(#wmzGrad)"/>';
         $svg .= '<rect x="40" y="40" width="1120" height="550" rx="22" fill="rgba(255,255,255,0.08)"/>';
-        $svg .= '<text x="88" y="190" fill="#bae6fd" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">WPMazic SEO</text>';
+        $svg .= '<text x="88" y="190" fill="#bae6fd" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">' . esc_html( $brand_line ) . '</text>';
         $svg .= '<foreignObject x="88" y="220" width="1024" height="270">';
         $svg .= '<div xmlns="http://www.w3.org/1999/xhtml" style="color:#ffffff;font-family:Segoe UI,Arial,sans-serif;font-size:62px;font-weight:700;line-height:1.12;">' . esc_html( $title ) . '</div>';
         $svg .= '</foreignObject>';
@@ -130,4 +131,3 @@ class WPMazic_Dynamic_OG {
         return $text;
     }
 }
-

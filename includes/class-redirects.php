@@ -27,7 +27,7 @@ class WPMazic_Redirects {
 
         global $wpdb;
 
-        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_sanitize_redirect( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
         $path        = wp_parse_url( $request_uri, PHP_URL_PATH );
         $path = '/' . ltrim( (string) $path, '/' );
         $path = untrailingslashit( $path );
@@ -35,7 +35,7 @@ class WPMazic_Redirects {
             $path = '/';
         }
 
-        $table    = $wpdb->prefix . 'wpmazic_redirects';
+        $table    = wpmazic_seo_get_table_name( 'redirects' );
         $redirect = $wpdb->get_row(
             $wpdb->prepare(
                 "SELECT * FROM {$table} WHERE status = %s AND source = %s LIMIT 1",
@@ -153,7 +153,7 @@ class WPMazic_Redirects {
         }
 
         global $wpdb;
-        $table = $wpdb->prefix . 'wpmazic_redirects';
+        $table = wpmazic_seo_get_table_name( 'redirects' );
 
         $exists = $wpdb->get_var(
             $wpdb->prepare(
@@ -196,7 +196,7 @@ class WPMazic_Redirects {
         }
 
         $target_path = wp_parse_url( $target, PHP_URL_PATH );
-        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_sanitize_redirect( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
         $request     = wp_parse_url( $request_uri, PHP_URL_PATH );
 
         if ( $target_path && $request && untrailingslashit( $target_path ) === untrailingslashit( $request ) ) {

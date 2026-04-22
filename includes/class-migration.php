@@ -32,10 +32,6 @@ class WPMazic_Migration {
      * @return array
      */
     public static function get_detected_sources() {
-        if ( ! function_exists( 'is_plugin_active' ) && file_exists( ABSPATH . 'wp-admin/includes/plugin.php' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-
         $checks = array(
             'yoast' => array(
                 'plugins' => array( 'wordpress-seo/wp-seo.php', 'wordpress-seo-premium/wp-seo-premium.php' ),
@@ -1129,6 +1125,8 @@ class WPMazic_Migration {
      * @return bool
      */
     private static function is_source_detected( $check ) {
+        $active_plugins = self::get_active_plugin_files();
+
         if ( ! empty( $check['class'] ) && class_exists( $check['class'] ) ) {
             return true;
         }
@@ -1141,10 +1139,7 @@ class WPMazic_Migration {
                     continue;
                 }
 
-                if ( function_exists( 'is_plugin_active' ) && is_plugin_active( $plugin_file ) ) {
-                    return true;
-                }
-                if ( function_exists( 'is_plugin_active_for_network' ) && is_plugin_active_for_network( $plugin_file ) ) {
+                if ( in_array( $plugin_file, $active_plugins, true ) ) {
                     return true;
                 }
             }
@@ -1158,5 +1153,26 @@ class WPMazic_Migration {
         }
 
         return false;
+    }
+
+    /**
+     * Return active plugin basenames for the current site and network.
+     *
+     * @return string[]
+     */
+    private static function get_active_plugin_files() {
+        $active_plugins = get_option( 'active_plugins', array() );
+        $active_plugins = is_array( $active_plugins ) ? $active_plugins : array();
+
+        if ( is_multisite() ) {
+            $network_active = get_site_option( 'active_sitewide_plugins', array() );
+            if ( is_array( $network_active ) ) {
+                $active_plugins = array_merge( $active_plugins, array_keys( $network_active ) );
+            }
+        }
+
+        $active_plugins = array_map( 'strval', $active_plugins );
+
+        return array_values( array_unique( $active_plugins ) );
     }
 }

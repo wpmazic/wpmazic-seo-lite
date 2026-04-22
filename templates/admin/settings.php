@@ -65,11 +65,6 @@ wpmazic_seo_admin_shell_open(
                 <p class="wmz-help"><?php esc_html_e( 'Public key URL: /indexnow-key/{key}.txt. This key is intentionally public for IndexNow validation.', 'wpmazic-seo-lite' ); ?></p>
             </div>
             <div class="wmz-field">
-                <label for="generator_meta_text"><?php esc_html_e( 'Branding Meta Text', 'wpmazic-seo-lite' ); ?></label>
-                <input class="wmz-input" type="text" id="generator_meta_text" name="wpmazic_settings[generator_meta_text]" value="<?php echo esc_attr( isset( $settings['generator_meta_text'] ) ? $settings['generator_meta_text'] : 'WPMazic SEO' ); ?>">
-                <p class="wmz-help"><?php esc_html_e( 'Used in the public <meta name="generator"> tag when Plugin Branding Meta Tag is enabled.', 'wpmazic-seo-lite' ); ?></p>
-            </div>
-            <div class="wmz-field">
                 <label for="ga4_measurement_id"><?php esc_html_e( 'GA4 Measurement ID', 'wpmazic-seo-lite' ); ?></label>
                 <input class="wmz-input" type="text" id="ga4_measurement_id" name="wpmazic_settings[ga4_measurement_id]" value="<?php echo esc_attr( isset( $settings['ga4_measurement_id'] ) ? $settings['ga4_measurement_id'] : '' ); ?>" placeholder="G-XXXXXXXXXX">
                 <p class="wmz-help"><?php esc_html_e( 'GA4 measurement IDs are public identifiers. When tracking is enabled, this value appears in frontend source as part of the Google tag.', 'wpmazic-seo-lite' ); ?></p>
@@ -100,12 +95,10 @@ wpmazic_seo_admin_shell_open(
                 'enable_image_seo'          => __( 'Image SEO', 'wpmazic-seo-lite' ),
                 'enable_indexnow'           => __( 'IndexNow', 'wpmazic-seo-lite' ),
                 'enable_link_tracking'      => __( 'Internal Link Tracking', 'wpmazic-seo-lite' ),
-                'enable_generator_meta'     => __( 'Plugin Branding Meta Tag', 'wpmazic-seo-lite' ),
                 'enable_llms_txt'           => __( 'llms.txt Endpoint', 'wpmazic-seo-lite' ),
                 'enable_image_sitemap'      => __( 'Image Sitemap', 'wpmazic-seo-lite' ),
                 'enable_auto_slug_redirect' => __( 'Auto Redirect on Slug Change', 'wpmazic-seo-lite' ),
                 'enable_dynamic_og_image'   => __( 'Dynamic OG Image Fallback', 'wpmazic-seo-lite' ),
-                'enable_auto_search_ping'   => __( 'Auto Ping Search Engines', 'wpmazic-seo-lite' ),
             );
 
             $feature_groups = array(
@@ -118,7 +111,6 @@ wpmazic_seo_admin_shell_open(
                         'enable_breadcrumbs',
                         'enable_image_seo',
                         'enable_link_tracking',
-                        'enable_generator_meta',
                     ),
                 ),
                 array(
@@ -128,7 +120,6 @@ wpmazic_seo_admin_shell_open(
                         'enable_sitemap',
                         'enable_image_sitemap',
                         'enable_indexnow',
-                        'enable_auto_search_ping',
                         'enable_llms_txt',
                     ),
                 ),

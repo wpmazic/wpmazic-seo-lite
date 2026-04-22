@@ -60,7 +60,7 @@ class WPMazic_Schema {
             '@graph'   => $graph,
         );
 
-        echo '<script type="application/ld+json">' . wp_json_encode( $payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+        echo '<script type="application/ld+json">' . wp_json_encode( $payload ) . '</script>' . "\n";
     }
 
     /**
