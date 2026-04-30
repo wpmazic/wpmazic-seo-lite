@@ -113,6 +113,8 @@ if ( ! function_exists( 'wpmazic_seo_lite_is_pro_active' ) ) {
      */
     function wpmazic_seo_lite_is_pro_active() {
         $pro_plugins = array(
+            'mazic-seo-pro/mazic-seo.php',
+            'mazic-seo/mazic-seo.php',
             'wpmazic-seo-pro/wpmazic-seo.php',
             'wpmazic-seo/wpmazic-seo.php',
         );
@@ -151,6 +153,38 @@ if ( ! function_exists( 'wpmazic_seo_lite_is_pro_active' ) ) {
     }
 }
 
+if ( ! function_exists( 'wpmazic_seo_lite_deactivate_self' ) ) {
+    /**
+     * Deactivate this plugin from an admin request when a conflicting SEO package is active.
+     *
+     * @return void
+     */
+    function wpmazic_seo_lite_deactivate_self() {
+        if ( ! is_admin() || ! wpmazic_seo_safe_can_activate_plugins() ) {
+            return;
+        }
+
+        if ( ! function_exists( 'deactivate_plugins' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        if ( function_exists( 'deactivate_plugins' ) ) {
+            deactivate_plugins( plugin_basename( __FILE__ ), true );
+        }
+    }
+}
+
+if ( ! function_exists( 'wpmazic_seo_lite_pro_url' ) ) {
+    /**
+     * Return the public WPMazic SEO Pro product URL.
+     *
+     * @return string
+     */
+    function wpmazic_seo_lite_pro_url() {
+        return 'https://wpmazic.com/wpmazic-seo/';
+    }
+}
+
 // Prevent loading Lite alongside Pro to avoid shared symbol conflicts.
 if ( wpmazic_seo_lite_is_pro_active() ) {
     if ( wpmazic_seo_lite_is_self_activation_request() ) {
@@ -161,13 +195,7 @@ if ( wpmazic_seo_lite_is_pro_active() ) {
         );
     }
 
-    if ( is_admin() && wpmazic_seo_safe_can_activate_plugins() ) {
-        if ( ! function_exists( 'deactivate_plugins' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-
-        deactivate_plugins( plugin_basename( __FILE__ ), true );
-    }
+    wpmazic_seo_lite_deactivate_self();
     return;
 }
 
@@ -394,12 +422,8 @@ function wpmazic_seo_get_default_settings() {
 function wpmazic_seo_activate( $show_wizard = true ) {
     global $wpdb;
 
-    if ( ! function_exists( 'deactivate_plugins' ) ) {
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    }
-
     if ( wpmazic_seo_lite_is_pro_active() ) {
-        deactivate_plugins( plugin_basename( __FILE__ ), true );
+        wpmazic_seo_lite_deactivate_self();
         wp_die(
             esc_html__( 'WPMazic SEO Lite cannot be activated while WPMazic SEO Pro is active. Deactivate Pro first.', 'wpmazic-seo-lite' ),
             esc_html__( 'Plugin Conflict', 'wpmazic-seo-lite' ),
@@ -608,6 +632,21 @@ add_action(
 );
 
 if ( is_admin() ) {
+    add_filter(
+        'plugin_action_links_' . WPMAZIC_SEO_BASENAME,
+        function ( $links ) {
+            $pro_link = sprintf(
+                '<a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
+                esc_url( wpmazic_seo_lite_pro_url() ),
+                esc_html__( 'View Pro', 'wpmazic-seo-lite' )
+            );
+
+            $links['wpmazic_seo_lite_pro'] = $pro_link;
+
+            return $links;
+        }
+    );
+
     add_action(
         'init',
         function () {

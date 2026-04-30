@@ -71,22 +71,26 @@ class WPMazic_Verification
             return;
         }
 
-        // Enqueue external gtag.js script
+        $script_url = add_query_arg(
+            'id',
+            rawurlencode($raw_id),
+            'https://www.googletagmanager.com/gtag/js'
+        );
+
         wp_enqueue_script(
             'wpmazic-ga4-gtag',
-            'https://www.googletagmanager.com/gtag/js?id=' . esc_attr($raw_id),
+            esc_url($script_url),
             array(),
-            null, // No version for external script
+            null,
             array(
                 'strategy' => 'async',
             )
         );
 
-        // Add inline script
         $inline_script = 'window.dataLayer = window.dataLayer || [];' . "\n";
         $inline_script .= 'function gtag(){dataLayer.push(arguments);}' . "\n";
         $inline_script .= "gtag('js', new Date());\n";
-        $inline_script .= "gtag('config', '" . esc_js($raw_id) . "');";
+        $inline_script .= 'gtag("config", ' . wp_json_encode($raw_id) . ');';
 
         wp_add_inline_script('wpmazic-ga4-gtag', $inline_script);
     }

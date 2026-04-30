@@ -563,10 +563,12 @@ if (isset($_POST['wpmazic_submit_indexnow_batch']) && check_admin_referer('wpmaz
     if (!current_user_can('manage_options')) {
         wpmazic_seo_lite_add_notice('error', __('Permission denied.', 'wpmazic-seo-lite'));
     } else {
-    $settings = get_option('wpmazic_settings', array());
+    $settings = function_exists('wpmazic_seo_get_settings') ? wpmazic_seo_get_settings() : get_option('wpmazic_settings', array());
     $api_key = !empty($settings['indexnow_api_key']) ? preg_replace('/[^a-zA-Z0-9-]/', '', (string) $settings['indexnow_api_key']) : '';
 
-    if ('' === $api_key) {
+    if (empty($settings['enable_indexnow'])) {
+        wpmazic_seo_lite_add_notice('error', __('IndexNow is disabled. Enable it in Settings before submitting URLs.', 'wpmazic-seo-lite'));
+    } elseif ('' === $api_key) {
         echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__('IndexNow API key is missing. Please add it in Settings first.', 'wpmazic-seo-lite') . '</p></div>';
     } else {
         $limit = isset($_POST['wpmazic_indexnow_limit']) ? absint(wp_unslash($_POST['wpmazic_indexnow_limit'])) : 50;

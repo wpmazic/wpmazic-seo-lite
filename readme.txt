@@ -28,12 +28,12 @@ WPMazic SEO Lite helps you launch SEO fundamentals quickly.
 
 == External services ==
 
-This plugin does not connect to external services by default. External requests happen only if the site owner enables and configures the relevant feature.
+WPMazic SEO Lite does not send tracking data or make external service requests by default. External services are used only after the site owner enables the related setting or runs the related admin tool.
 
-* Google Analytics 4 frontend tracking: this is used to load Google Analytics tracking on the public site. When the site owner enables GA4 tracking and saves a Measurement ID, the plugin loads `gtag.js` from `www.googletagmanager.com` and sends pageview-related analytics requests to Google when visitors load frontend pages. The Measurement ID is included in page source, and Google may also receive the visitor's page URL plus standard browser and device request data needed for analytics delivery.
+* Google Analytics 4 / Google tag (`www.googletagmanager.com`): used to add Google Analytics 4 tracking to the public frontend. Data is sent only when the site owner enters a GA4 Measurement ID and enables "GA4 Frontend Tracking" in the plugin settings. When enabled, the plugin loads Google's `gtag.js` script in frontend page source. Google receives the configured Measurement ID, the visitor's page URL, and standard browser/request data needed to deliver analytics. This feature is off by default.
   Terms: https://policies.google.com/terms
   Privacy: https://policies.google.com/privacy
-* IndexNow submission: this is used to notify participating search engines that a URL was added, updated, or deleted. When the site owner enables IndexNow, the plugin sends the changed page URL, the site host, the configured IndexNow key, and the key location URL to `https://api.indexnow.org/indexnow` when supported content is published or updated. The same data is also sent when the site owner manually runs the IndexNow batch tool from the plugin's Tools screen.
+* IndexNow (`api.indexnow.org`): used to notify participating search engines when site URLs are published or updated. Data is sent only when the site owner enables IndexNow in the plugin settings, or when an administrator manually runs the IndexNow batch submission tool after IndexNow is enabled. The plugin sends the site host, the submitted URL or URLs, the configured IndexNow key, and the key location URL to `https://api.indexnow.org/indexnow`. This feature is off by default.
   Documentation: https://www.indexnow.org/documentation
   Terms: https://www.indexnow.org/terms
   Privacy: https://www.indexnow.org/terms
