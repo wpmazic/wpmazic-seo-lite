@@ -1,10 +1,19 @@
 <?php
+/**
+ * 404 Monitor — logs missing URL requests and tracks broken-link trends.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+/**
+ * Records and reports on requests that resulted in a 404 response.
+ */
 class WPMazic_Monitor_404 {
 
     public function __construct() {

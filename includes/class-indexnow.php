@@ -1,10 +1,19 @@
 <?php
+/**
+ * IndexNow — submits updated URLs to IndexNow-enabled search engines.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+/**
+ * Notifies IndexNow-enabled search engines of content changes.
+ */
 class WPMazic_IndexNow {
 
     /**

@@ -1,8 +1,17 @@
 <?php
+/**
+ * llms.txt — serves an LLM-friendly content index endpoint.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Registers and renders the /llms.txt content index endpoint.
+ */
 class WPMazic_LLMS_Txt {
 
     public function __construct() {

@@ -1,8 +1,17 @@
 <?php
+/**
+ * RSS SEO — adds content before/after RSS feed items.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Injects configurable content into the site's RSS feed output.
+ */
 class WPMazic_RSS_SEO {
 
     public function __construct() {

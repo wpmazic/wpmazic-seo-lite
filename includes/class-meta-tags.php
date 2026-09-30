@@ -1,6 +1,16 @@
 <?php
+/**
+ * Meta Tags — outputs SEO title, meta description, and Open Graph tags.
+ *
+ * @package WPMazic_SEO
+ */
+
 if (!defined('ABSPATH')) exit;
 
+/**
+ * Filters the document title and outputs meta description, Open Graph,
+ * and Twitter Card tags in wp_head.
+ */
 class WPMazic_Meta_Tags {
 
     /**
@@ -43,7 +53,7 @@ class WPMazic_Meta_Tags {
      */
     private function get_site_name() {
         $name = $this->get_setting('site_name', '');
-        return $name !== '' ? $name : get_bloginfo('name');
+        return '' !== $name ? $name : get_bloginfo('name');
     }
 
     /**
@@ -51,7 +61,7 @@ class WPMazic_Meta_Tags {
      */
     private function get_separator() {
         $sep = $this->get_setting('separator', '-');
-        return $sep !== '' ? $sep : '-';
+        return '' !== $sep ? $sep : '-';
     }
 
     /**

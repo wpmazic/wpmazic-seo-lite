@@ -1,8 +1,17 @@
 <?php
+/**
+ * Image Sitemap — generates the image XML sitemap.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Builds and serves the image XML sitemap endpoint.
+ */
 class WPMazic_Image_Sitemap {
 
     public function __construct() {

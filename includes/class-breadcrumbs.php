@@ -1,8 +1,17 @@
 <?php
+/**
+ * Breadcrumbs — renders and filters the site breadcrumb trail.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Builds and outputs the breadcrumb navigation trail.
+ */
 class WPMazic_Breadcrumbs {
 
     public function __construct() {

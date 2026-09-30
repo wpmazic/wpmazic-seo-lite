@@ -11,6 +11,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Renders and saves the per-post SEO metabox (title, meta, social, schema).
+ */
 class WPMazic_Metabox
 {
 
@@ -833,5 +836,3 @@ class WPMazic_Metabox
         // phpcs:enable WordPress.Security.NonceVerification.Missing
     }
 }
-
-?>

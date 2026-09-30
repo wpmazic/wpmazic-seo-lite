@@ -1,8 +1,17 @@
 <?php
+/**
+ * Migration — imports SEO settings from Yoast, Rank Math, and AIOSEO.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Detects and imports SEO meta and settings from other SEO plugins.
+ */
 class WPMazic_Migration {
 
     /**

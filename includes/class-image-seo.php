@@ -1,8 +1,17 @@
 <?php
+/**
+ * Image SEO — automated alt text and filename optimization for uploads.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Improves image accessibility and SEO metadata on attachments.
+ */
 class WPMazic_Image_SEO {
 
     public function __construct() {

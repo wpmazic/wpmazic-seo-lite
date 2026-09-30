@@ -1,10 +1,19 @@
 <?php
+/**
+ * Redirects — manages 301/302 redirect rules and auto slug redirects.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+/**
+ * Handles redirect matching, storage, and auto slug-change redirects.
+ */
 class WPMazic_Redirects {
 
     public function __construct() {

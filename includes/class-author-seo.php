@@ -1,8 +1,17 @@
 <?php
+/**
+ * Author SEO — author archive meta and social profile enhancements.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Adds SEO-related fields to user profiles and enhances author archives.
+ */
 class WPMazic_Author_SEO {
 
     public function __construct() {

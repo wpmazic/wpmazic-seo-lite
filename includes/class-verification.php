@@ -1,8 +1,17 @@
 <?php
+/**
+ * Verification — outputs search engine site verification meta tags.
+ *
+ * @package WPMazic_SEO
+ */
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Outputs Google, Bing, Yandex, and Baidu site verification meta tags.
+ */
 class WPMazic_Verification
 {
 

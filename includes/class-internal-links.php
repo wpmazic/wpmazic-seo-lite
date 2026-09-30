@@ -1,10 +1,19 @@
 <?php
+/**
+ * Internal Links — tracks and analyzes internal linking structure.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+/**
+ * Scans content and records internal link relationships.
+ */
 class WPMazic_Internal_Links {
 
     public function __construct() {

@@ -1,8 +1,18 @@
 <?php
+/**
+ * Security — bad bot blocking, security headers, and hardening options.
+ *
+ * @package WPMazic_SEO
+ */
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Applies optional site-hardening features: bad bot blocking, security
+ * headers, XML-RPC disabling, version hiding, and author enumeration blocking.
+ */
 class WPMazic_Security
 {
 

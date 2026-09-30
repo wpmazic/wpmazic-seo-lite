@@ -1,8 +1,17 @@
 <?php
+/**
+ * Robots.txt — filters and edits the virtual robots.txt output.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Filters WordPress's virtual robots.txt output with plugin-managed rules.
+ */
 class WPMazic_Robots_Txt {
 
     public function __construct() {

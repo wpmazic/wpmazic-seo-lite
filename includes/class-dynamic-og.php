@@ -1,8 +1,17 @@
 <?php
+/**
+ * Dynamic OG — generates a fallback Open Graph image when none is set.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Serves a generated SVG Open Graph image for content without a set image.
+ */
 class WPMazic_Dynamic_OG {
 
     public function __construct() {

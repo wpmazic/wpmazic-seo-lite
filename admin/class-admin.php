@@ -14,6 +14,9 @@ if (!defined('ABSPATH')) {
 
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
+/**
+ * Handles admin AJAX endpoints and settings sanitization for the plugin.
+ */
 class WPMazic_Admin
 {
 

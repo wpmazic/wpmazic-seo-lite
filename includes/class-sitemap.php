@@ -1,8 +1,17 @@
 <?php
+/**
+ * Sitemap — generates the XML sitemap index and per-type sitemaps.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Builds and serves the XML sitemap index and per-post-type sitemaps.
+ */
 class WPMazic_Sitemap {
 
     public function __construct() {

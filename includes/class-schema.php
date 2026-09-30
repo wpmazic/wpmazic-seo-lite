@@ -1,8 +1,17 @@
 <?php
+/**
+ * Schema — outputs JSON-LD structured data for supported content types.
+ *
+ * @package WPMazic_SEO
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Builds and outputs JSON-LD schema markup (Article, FAQ, Product, LocalBusiness).
+ */
 class WPMazic_Schema {
 
     public function __construct() {
